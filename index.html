@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#fff5f8" />
   <meta name="description" content="A sweet, interactive romantic website with surprises, memories, a song, and a love letter." />
-  <title>A little surprise for you ♡</title>
+  <title>A Little Question for You ♡</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%92%97%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
@@ -24,20 +24,21 @@
       <div class="question-inner">
         <p class="overline">psst... I have a tiny question for you <span>✧</span></p>
         <div class="bear-holder"><span class="orbit orbit-a" aria-hidden="true">💕</span><img src="./assets/shy-bear.svg" alt="A cute shy bear holding a pink heart" class="bear-img"><span class="orbit orbit-b" aria-hidden="true">✧</span></div>
-        <h1 id="questionTitle" class="question-title">Can you Be My gf? <span>♥</span></h1>
-        <p id="questionSubtitle" class="question-subtitle" aria-live="polite">Just a little question from my heart to yours...</p>
+        <h1 id="questionTitle" class="question-title">Can you be my gf? <span>♥</span></h1>
+        <p id="questionSubtitle" class="question-subtitle" aria-live="polite">There's something special I've been wanting to ask you...</p>
         <div class="answer-area" id="answerArea">
           <button class="answer-button yes-button" id="yesButton" type="button">YES <span aria-hidden="true">♡</span></button>
           <button class="answer-button no-button" id="noButton" type="button">NO</button>
         </div>
         <p class="tiny-note">psst... your answer might unlock something sweet 💌</p>
+        <p class="answer-disclosure">Your YES or NO answer will be sent to the website creator on Telegram.</p>
       </div>
     </section>
 
     <section class="screen screen-gifts" id="gifts" aria-labelledby="giftsTitle" hidden>
       <div class="gifts-inner">
         <p class="overline">you just made my whole day <span>♡</span></p>
-        <h1 id="giftsTitle" class="gifts-title">I knew you'd say yes <span>💕</span></h1>
+        <h1 id="giftsTitle" class="gifts-title">Yay! You made my day! <span>💕</span></h1>
         <div class="gifts-mascot"><img src="./assets/shy-bear.svg" alt="A happy little bear with hearts" /><span class="float-heart h1">♥</span><span class="float-heart h2">♥</span><span class="float-heart h3">♡</span></div>
         <p class="gifts-intro">I made you three tiny surprises. Pick a gift to open! ✨</p>
         <div class="gift-grid">
@@ -115,6 +116,7 @@
   <footer class="site-footer">made with love, a little courage, and lots of hearts <span>♡</span></footer>
   <dialog id="photoDialog" class="photo-dialog" aria-label="Memory photo"><button class="photo-close" id="closePhoto" type="button" aria-label="Close photo">×</button><img id="dialogImage" alt="" /><p id="dialogCaption"></p></dialog>
   <div id="heartBurst" class="heart-burst" aria-hidden="true"></div>
+  <div id="answerStatus" class="answer-status" role="status" aria-live="polite" hidden></div>
   <audio id="loveAudio" src="./assets/original-love-melody.mp3" preload="metadata" loop></audio>
   <script src="./script.js" defer></script>
 </body>

@@ -5,8 +5,8 @@
  * or update each image's src in index.html.
  */
 const siteConfig = {
-  question: 'Do you love me?',
-  successMessage: "I knew you'd say yes",
+  question: 'Can you be my gf?',
+  successMessage: 'Yay! You made my day!',
   letterGreeting: 'My favorite person,',
   senderName: 'Your secret admirer ♡',
   letterParagraphs: [
@@ -32,6 +32,9 @@ const siteConfig = {
   const muteSong = $('#muteSong');
   let noCount = 0;
   let currentScreen = 'question';
+  const submittedAnswers = new Set();
+  const answerStatus = $('#answerStatus');
+  let statusTimeout;
 
   const reactions = [
     'Wait... are you sure? 🥺',
@@ -65,7 +68,7 @@ const siteConfig = {
   function resetQuestion() {
     noCount = 0;
     title.innerHTML = `${escapeHTML(siteConfig.question)} <span>♥</span>`;
-    subtitle.textContent = 'Just a little question from my heart to yours...';
+    subtitle.textContent = "There's something special I've been wanting to ask you...";
     yesButton.style.setProperty('--yes-scale', '1');
     noButton.style.setProperty('--no-scale', '1');
     noButton.textContent = 'NO';
@@ -88,7 +91,34 @@ const siteConfig = {
     if (activeHeading) activeHeading.setAttribute('tabindex', '-1');
   }
 
+  // Send only a YES or NO response. Credentials stay in the Vercel server function.
+  async function sendAnswer(answer) {
+    if (submittedAnswers.has(answer)) return;
+    submittedAnswers.add(answer);
+    try {
+      const response = await fetch('/api/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answer }),
+      });
+      if (!response.ok) throw new Error('Notification failed');
+      showAnswerStatus('Your answer was sent 💌');
+    } catch {
+      submittedAnswers.delete(answer); // a later click can retry
+      showAnswerStatus('Could not send to Telegram. Please try again.', true);
+    }
+  }
+
+  function showAnswerStatus(message, isError = false) {
+    clearTimeout(statusTimeout);
+    answerStatus.textContent = message;
+    answerStatus.classList.toggle('error', isError);
+    answerStatus.hidden = false;
+    statusTimeout = setTimeout(() => { answerStatus.hidden = true; }, 5000);
+  }
+
   noButton.addEventListener('click', () => {
+    if (noCount === 0) void sendAnswer('no');
     if (noCount >= reactions.length) {
       resetQuestion();
       return;
@@ -107,6 +137,7 @@ const siteConfig = {
   });
 
   yesButton.addEventListener('click', () => {
+    void sendAnswer('yes');
     burstHearts();
     showScreen('gifts');
   });
